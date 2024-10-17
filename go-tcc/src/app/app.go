@@ -58,7 +58,7 @@ func runRest(file *os.File, token string) {
 func runGraphQL(file *os.File, token string) {
 	var GITHUB_GRAPHQL_URL string = "https://api.github.com/graphql"
 
-	var body string = "{\"query\": \"query { user(login: \\\"nicolasdaldegan\\\") { repositories(first: 5) { nodes { name url stargazerCount forkCount languages(first: 5) { nodes { name } } } } } }\"}"
+	var body string = "{\"query\": \"query { user(login: \\\"nicolasdaldegan\\\") { repositories(first: 5) { nodes { name url stargazerCount forkCount } } } }\"}"
 
 	for i := 0; i < 100; i++ {
 		size, time := doGraphQL(GITHUB_GRAPHQL_URL, body, token)
