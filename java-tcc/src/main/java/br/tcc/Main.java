@@ -30,8 +30,7 @@ public class Main {
                 + "\"query\": \"{ repository(owner: \\\"Netflix\\\", name: \\\"Hystrix\\\") { pullRequests(first: 5) { nodes { title url state createdAt updatedAt mergedAt closedAt number additions deletions changedFiles author { login url } assignees(first: 5) { nodes { login url } } labels(first: 5) { nodes { name color } } milestone { title dueOn description } comments(first: 5) { nodes { body author { login url } createdAt updatedAt } } commits(first: 5) { nodes { commit { message committedDate url author { name email date } } } } files(first: 5) { nodes { path additions deletions } } reviews(first: 5) { nodes { body author { login url } state submittedAt } } } } } }\""
                 + "}";
 
-        for (int i = -10; i < 100; i++) {
-
+        for (int i = 0; i < 100; i++) {
             Thread.sleep(1000);
             Analytics analytics_graphql_3 = RequestRest.doRest("users/Netflix/repos?per_page=5");
             list_analytics.add(analytics_graphql_3);

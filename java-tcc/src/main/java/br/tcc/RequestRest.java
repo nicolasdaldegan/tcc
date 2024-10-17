@@ -1,5 +1,7 @@
 package br.tcc;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,9 +11,11 @@ import java.net.URL;
 public class RequestRest {
 
     private static final String GITHUB_REST_URL = "https://api.github.com/";
-    private static final String TOKEN_AUTH = "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";
 
     public static Analytics doRest(String path) throws IOException {
+
+        Dotenv dotenv = Dotenv.load();
+        String token = dotenv.get("TOKEN");
 
         Analytics analytics = new Analytics();
         String restEndpoint = GITHUB_REST_URL + path;
@@ -19,7 +23,7 @@ public class RequestRest {
         URL url = new URL(restEndpoint);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-        connection.setRequestProperty("Authorization", "Bearer " + TOKEN_AUTH);
+        connection.setRequestProperty("Authorization", "Bearer " + token);
 
         long time_init = System.currentTimeMillis();
 
