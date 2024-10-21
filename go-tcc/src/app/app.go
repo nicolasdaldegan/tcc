@@ -59,22 +59,23 @@ func main() {
 func runRest(file *os.File, token string) {
 	var GITHUB_REST_URL string = "https://api.github.com/repos/facebook/react"
 
-	for i := 0; i < 10; i++ {
-		size, time := doRest(GITHUB_REST_URL, token)
-		result := fmt.Sprintf("REST -> Size: %d bytes, Time: %v\n", size, time)
+	for i := 0; i < 100; i++ {
+		size_response, size_request, time := doRest(GITHUB_REST_URL, token)
+		result := fmt.Sprintf("REST -> Size request: %d bytes, Size response: %d bytes, Time: %v\n", size_request, size_response, time)
 		fmt.Print(result)
 		writeToFile(file, result)
 	}
 }
 
 func runGraphQL(file *os.File, token string) {
+
 	var GITHUB_GRAPHQL_URL string = "https://api.github.com/graphql"
 
 	var body string = "{\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name description stargazerCount } }\"}"
 
-	for i := 0; i < 10; i++ {
-		size, time := doGraphQL(GITHUB_GRAPHQL_URL, body, token)
-		result := fmt.Sprintf("GraphQL -> Size: %d bytes, Time: %v\n", size, time)
+	for i := 0; i < 100; i++ {
+		size_response, size_request, time := doGraphQL(GITHUB_GRAPHQL_URL, body, token)
+		result := fmt.Sprintf("GraphQL -> Size request: %d bytes, Size response: %d bytes, Time: %v\n", size_request, size_response, time)
 		fmt.Print(result)
 		writeToFile(file, result)
 	}
