@@ -9,11 +9,11 @@ import (
 
 func doRest(url_request string, token string) (int, time.Duration) {
 
-	time_init := time.Now()
-
-	req, err := http.NewRequest("GET", url_request, nil)
+	req, _ := http.NewRequest("GET", url_request, nil)
 
 	req.Header.Set("Authorization", "Bearer "+token)
+
+	time_init := time.Now()
 
 	resp, err := client.Do(req)
 

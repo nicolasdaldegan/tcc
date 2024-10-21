@@ -12,15 +12,10 @@ func doGraphQL(url_request string, body string, token string) (int, time.Duratio
 
 	payload := bytes.NewBufferString(body)
 
-	req, err := http.NewRequest(http.MethodPost, url_request, payload)
-
-	if err != nil {
-		log.Printf("Erro ao criar a request: %v", err)
-		return 0, 0
-	}
+	req, _ := http.NewRequest(http.MethodPost, url_request, payload)
 
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("Authorization", "Bearer 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")
+	req.Header.Add("Authorization", "Bearer "+token)
 
 	time_init := time.Now()
 

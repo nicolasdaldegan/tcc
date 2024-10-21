@@ -26,18 +26,30 @@ func main() {
 	mode := flag.String("mode", "rest", "Escolha entre 'rest' ou 'graphql'")
 	flag.Parse()
 
-	file, err := os.OpenFile("resultados.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-
-	if err != nil {
-		log.Fatalf("Erro ao abrir arquivo: %v", err)
-	}
-
-	defer file.Close()
-
 	if *mode == "rest" {
+
+		file, err := os.OpenFile("resultados-rest-go.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+
+		if err != nil {
+			log.Fatalf("Erro ao abrir arquivo: %v", err)
+		}
+
+		defer file.Close()
+
 		runRest(file, token)
+
 	} else if *mode == "graphql" {
+
+		file, err := os.OpenFile("resultados-graphql-go.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+
+		if err != nil {
+			log.Fatalf("Erro ao abrir arquivo: %v", err)
+		}
+
+		defer file.Close()
+
 		runGraphQL(file, token)
+
 	} else {
 		log.Fatalf("Modo inválido. Use 'rest' ou 'graphql'.")
 	}
@@ -45,9 +57,9 @@ func main() {
 }
 
 func runRest(file *os.File, token string) {
-	var GITHUB_REST_URL string = "https://api.github.com/users/nicolasdaldegan/repos?per_page=5"
+	var GITHUB_REST_URL string = "https://api.github.com/repos/facebook/react"
 
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 10; i++ {
 		size, time := doRest(GITHUB_REST_URL, token)
 		result := fmt.Sprintf("REST -> Size: %d bytes, Time: %v\n", size, time)
 		fmt.Print(result)
@@ -58,9 +70,9 @@ func runRest(file *os.File, token string) {
 func runGraphQL(file *os.File, token string) {
 	var GITHUB_GRAPHQL_URL string = "https://api.github.com/graphql"
 
-	var body string = "{\"query\": \"query { user(login: \\\"nicolasdaldegan\\\") { repositories(first: 5) { nodes { name url stargazerCount forkCount } } } }\"}"
+	var body string = "{\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name description stargazerCount } }\"}"
 
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 10; i++ {
 		size, time := doGraphQL(GITHUB_GRAPHQL_URL, body, token)
 		result := fmt.Sprintf("GraphQL -> Size: %d bytes, Time: %v\n", size, time)
 		fmt.Print(result)
