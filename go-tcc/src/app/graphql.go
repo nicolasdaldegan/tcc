@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func doGraphQL(url_request string, body string, token string) (int, time.Duration) {
+func doGraphQL(url_request string, body string, token string) (int, int, time.Duration) {
 
 	payload := bytes.NewBufferString(body)
 
@@ -25,7 +25,7 @@ func doGraphQL(url_request string, body string, token string) (int, time.Duratio
 
 	if err != nil {
 		log.Printf("Erro ao executar requisição GraphQL: %v", err)
-		return 0, 0
+		return 0, 0, 0
 	}
 
 	defer resp.Body.Close()
@@ -34,8 +34,14 @@ func doGraphQL(url_request string, body string, token string) (int, time.Duratio
 
 	if err != nil {
 		log.Printf("Erro lendo resposta GraphQL: %v", err)
-		return 0, 0
+		return 0, 0, 0
 	}
 
-	return len(body_response), duration
+	if resp.StatusCode != 200 {
+		bodyString := string(body)
+		log.Printf("Erro ao executar requisição GraphQL, body: %v", bodyString)
+		return 0, 0, 0
+	}
+
+	return len(body_response), len(body), duration
 }
