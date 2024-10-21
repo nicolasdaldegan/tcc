@@ -12,7 +12,7 @@ public class RequestRest {
 
     private static final String GITHUB_REST_URL = "https://api.github.com/";
 
-    public static Analytics doRest(String path) throws IOException {
+    public static Analytics doRest(String path, Integer type) throws IOException {
 
         Dotenv dotenv = Dotenv.load();
         String token = dotenv.get("TOKEN");
@@ -44,6 +44,7 @@ public class RequestRest {
 
         String body = responseBody.toString();
 
+        analytics.type_query = "Query " + type.toString();
         analytics.time_elapsed = time_end - time_init;
         analytics.size_payload_request = restEndpoint.getBytes().length;
         analytics.size_payload_response = body.getBytes().length;

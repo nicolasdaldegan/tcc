@@ -13,7 +13,7 @@ public class RequestGraphQL {
 
     private static final String GITHUB_GRAPHQL_URL = "https://api.github.com/graphql";
 
-    public static Analytics doGraphQL(String query, boolean is_print) throws IOException {
+    public static Analytics doGraphQL(String query, Integer type) throws IOException {
 
         Analytics analytics = new Analytics();
 
@@ -48,15 +48,16 @@ public class RequestGraphQL {
             throw new RuntimeException("Erro na requisição: " + responseBody.toString());
         }
 
+        analytics.type_query = "Query " + type.toString();
         analytics.time_elapsed = time_end - time_init;
         analytics.size_payload_request = query.getBytes().length;
         analytics.size_payload_response = responseBody.toString().getBytes().length;
 
-        if (is_print) {
-            System.out.println("Tempo: " + analytics.time_elapsed);
-            System.out.println("Size Request: " + analytics.size_payload_request);
-            System.out.println("Size Response: " + analytics.size_payload_response);
-        }
+
+        System.out.println("Tempo: " + analytics.time_elapsed);
+        System.out.println("Size Request: " + analytics.size_payload_request);
+        System.out.println("Size Response: " + analytics.size_payload_response);
+
 
         return analytics;
     }
