@@ -32,6 +32,16 @@ Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
     ```bash
    java -version
 
+### Configurando o Token do GitHub
+
+Crie um arquivo .env na raiz do projeto
+
+Adicione a seguinte linha ao arquivo, substituindo SEU_TOKEN pelo seu token de acesso do GitHub
+
+    TOKEN=SEU_TOKEN
+
+O token pode ser gerado acessando as configurações da sua conta do GitHub, na seção Developer settings > Personal access tokens.
+
 ### Instalando as dependências do projeto e compilando
 
 Navegue até o diretório raiz da aplicação (java-tcc) e execute os seguintes comandos:
