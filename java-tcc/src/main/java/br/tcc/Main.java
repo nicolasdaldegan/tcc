@@ -49,8 +49,8 @@ public class Main {
 
     public static String getModeFromArgs(String[] args) {
         for (String arg : args) {
-            if (arg.startsWith("mode=")) {
-                return arg.substring(5);
+            if (arg.startsWith("--mode=")) {
+                return arg.substring(7);
             }
         }
         return null;
@@ -66,38 +66,31 @@ public class Main {
         List<String> query_2 = new ArrayList<>();
         List<String> query_3 = new ArrayList<>();
 
-        //1° get
-        String query_default = "repos/facebook/react";
+        //query básica
+        //repos/microsoft/vscode
+        String query_default = "repos/microsoft/vscode";
         query_1.add(query_default);
 
-        //2° get
+        //query média
+        //repos/vercel/next.js
+        //repos/vercel/next.js/commits?per_page=2
+        query_default = "repos/vercel/next.js";
+        query_2.add(query_default);
+
+        query_default = "repos/vercel/next.js/commits?per_page=2";
+        query_2.add(query_default);
+
+        //query grande
         //repos/facebook/react
-        //repos/facebook/react/forks?per_page=3
-        //repos/facebook/react/issues?state=open&per_page=3
-        query_default = "repos/facebook/react";
-        query_2.add(query_default);
-
-        query_default = "repos/facebook/react/forks?per_page=3";
-        query_2.add(query_default);
-
-        query_default = "repos/facebook/react/issues?state=open&per_page=3";
-        query_2.add(query_default);
-
-        //3° get
-        //repos/facebook/react
-        //repos/facebook/react/forks?per_page=10
-        //repos/facebook/react/issues?state=open&per_page=10
-        //repos/facebook/react/pulls?per_page=5
+        //repos/facebook/react/issues?state=open&per_page=2
+        //repos/facebook/react/pulls?per_page=2
         query_default = "repos/facebook/react";
         query_3.add(query_default);
 
-        query_default = "repos/facebook/react/forks?per_page=10";
+        query_default = "repos/facebook/react/issues?state=open&per_page=2";
         query_3.add(query_default);
 
-        query_default = "repos/facebook/react/issues?state=open&per_page=10";
-        query_3.add(query_default);
-
-        query_default = "repos/facebook/react/pulls?per_page=5";
+        query_default = "repos/facebook/react/pulls?per_page=2";
         query_3.add(query_default);
 
         queries.add(query_1);
@@ -106,14 +99,35 @@ public class Main {
 
         Analytics analytics_rest;
 
+        //Aquecer
+        for (int i = 0; i < 10; i++) {
+            analytics_rest = RequestRest.doRest(query_default, 1);
+        }
+
         Integer cont = 1;
 
+        List<Analytics> list_analytics_handler;
+
         for(List<String> query : queries) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 50; i++) {
+
+                list_analytics_handler = new ArrayList<>();
+
                 for(String get : query) {
                     analytics_rest = RequestRest.doRest(get, cont);
-                    list_analytics.add(analytics_rest);
+                    list_analytics_handler.add(analytics_rest);
                 }
+
+                Analytics analytics_use = new Analytics();
+
+                for(Analytics analytic : list_analytics_handler){
+                    analytics_use.type_query = analytic.type_query;
+                    analytics_use.size_payload_request += analytic.size_payload_request;
+                    analytics_use.size_payload_response += analytic.size_payload_response;
+                    analytics_use.time_elapsed += analytic.time_elapsed;
+                }
+
+                list_analytics.add(analytics_use);
             }
             cont++;
         }
@@ -128,17 +142,17 @@ public class Main {
 
         //query básica
         String query_1 = "{"
-                + "\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name description stargazerCount } }\""
+                + "\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount } }\""
                 + "}";
 
         //query média
         String query_2 = "{"
-                + "\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name stargazerCount forks(first: 5) { nodes { name owner { login } } } issues(states: OPEN, first: 5) { nodes { title createdAt url author { login } } } } }\""
+                + "\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name description stargazerCount defaultBranchRef { target { ... on Commit { history(first: 2) { edges { node { message committedDate } } } } } } } }\""
                 + "}";
 
         //query complexa
         String query_3 = "{"
-                + "\"query\": \"query { repository(owner: \\\"nubank\\\", name: \\\"fklearn\\\") { issues(states: OPEN, first: 10) { nodes { title createdAt url author { login } labels(first: 5) { nodes { name } } comments(first: 5) { nodes { author { login } body } } } } } }\""
+                + "\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name stargazerCount issues(states: OPEN, first: 2) { edges { node { title createdAt } } } pullRequests(last: 2) { edges { node { title mergedAt } } } collaborators(first: 2) { edges { node { login } } } } }\""
                 + "}";
 
         queries.add(query_1);
@@ -147,11 +161,15 @@ public class Main {
 
         Analytics analytics_graphql;
 
+        //Aquecer
+        for (int i = 0; i < 10; i++) {
+            analytics_graphql = RequestGraphQL.doGraphQL(query_1, 1);
+        }
+
         Integer cont = 1;
 
         for(String query : queries) {
-            for (int i = 0; i < 1; i++) {
-                Thread.sleep(1000);
+            for (int i = 0; i < 50; i++) {
                 analytics_graphql = RequestGraphQL.doGraphQL(query, cont);
                 list_analytics.add(analytics_graphql);
             }
