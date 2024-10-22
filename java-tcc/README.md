@@ -47,7 +47,7 @@ O token pode ser gerado acessando as configurações da sua conta do GitHub, na 
 Navegue até o diretório raiz da aplicação (java-tcc) e execute os seguintes comandos:
 
     mvn clean install
-    mvn compile
+    mvn clean compile
 
 
 ### Executando a Aplicação

@@ -73,24 +73,28 @@ public class Main {
 
         //query média
         //repos/vercel/next.js
-        //repos/vercel/next.js/commits?per_page=2
+        //repos/vercel/next.js/issues?state=open&per_page=2
         query_default = "repos/vercel/next.js";
         query_2.add(query_default);
 
-        query_default = "repos/vercel/next.js/commits?per_page=2";
+        query_default = "repos/vercel/next.js/issues?state=open&per_page=2";
         query_2.add(query_default);
 
         //query grande
         //repos/facebook/react
         //repos/facebook/react/issues?state=open&per_page=2
-        //repos/facebook/react/pulls?per_page=2
+        //repos/facebook/react/pulls?state=all&per_page=2
+        //repos/facebook/react/contributors?per_page=2
         query_default = "repos/facebook/react";
         query_3.add(query_default);
 
         query_default = "repos/facebook/react/issues?state=open&per_page=2";
         query_3.add(query_default);
 
-        query_default = "repos/facebook/react/pulls?per_page=2";
+        query_default = "repos/facebook/react/pulls?state=all&per_page=2";
+        query_3.add(query_default);
+
+        query_default = "repos/facebook/react/contributors?per_page=2";
         query_3.add(query_default);
 
         queries.add(query_1);
@@ -142,17 +146,30 @@ public class Main {
 
         //query básica
         String query_1 = "{"
-                + "\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount } }\""
+                + "\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { "
+                + "name "
+                + "stargazerCount "
+                + "} }\""
                 + "}";
 
         //query média
         String query_2 = "{"
-                + "\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name description stargazerCount defaultBranchRef { target { ... on Commit { history(first: 2) { edges { node { message committedDate } } } } } } } }\""
+                + "\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { "
+                + "name "
+                + "description "
+                + "issues(first: 2, states: OPEN) { nodes { title createdAt } } "
+                + "} }\""
                 + "}";
 
         //query complexa
         String query_3 = "{"
-                + "\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name stargazerCount issues(states: OPEN, first: 2) { edges { node { title createdAt } } } pullRequests(last: 2) { edges { node { title mergedAt } } } collaborators(first: 2) { edges { node { login } } } } }\""
+                + "\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { "
+                + "name "
+                + "stargazerCount "
+                + "issues(states: OPEN, first: 2) { edges { node { title createdAt } } } "
+                + "pullRequests(last: 2) { edges { node { title mergedAt } } } "
+                + "contributors(first: 2) { edges { node { login } } } "
+                + "} }\""
                 + "}";
 
         queries.add(query_1);
