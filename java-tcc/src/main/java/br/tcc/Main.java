@@ -110,25 +110,18 @@ public class Main {
 
         Integer cont = 1;
 
-        List<Analytics> list_analytics_handler;
-
         for(List<String> query : queries) {
-            for (int i = 0; i < 50; i++) {
-
-                list_analytics_handler = new ArrayList<>();
-
-                for(String get : query) {
-                    analytics_rest = RequestRest.doRest(get, cont);
-                    list_analytics_handler.add(analytics_rest);
-                }
+            for (int i = 0; i < 1; i++) {
 
                 Analytics analytics_use = new Analytics();
 
-                for(Analytics analytic : list_analytics_handler){
-                    analytics_use.type_query = analytic.type_query;
-                    analytics_use.size_payload_request += analytic.size_payload_request;
-                    analytics_use.size_payload_response += analytic.size_payload_response;
-                    analytics_use.time_elapsed += analytic.time_elapsed;
+                for(String get : query) {
+                    analytics_rest = RequestRest.doRest(get, cont);
+
+                    analytics_use.type_query = analytics_rest.type_query;
+                    analytics_use.size_payload_request += analytics_rest.size_payload_request;
+                    analytics_use.size_payload_response += analytics_rest.size_payload_response;
+                    analytics_use.time_elapsed += analytics_rest.time_elapsed;
                 }
 
                 list_analytics.add(analytics_use);
