@@ -8,9 +8,11 @@ import (
 	"time"
 )
 
-func doRest(url_request string, token string) (int, int, time.Duration) {
+const GITHUB_REST_URL = "https://api.github.com/"
 
-	req, _ := http.NewRequest("GET", url_request, nil)
+func doRest(endpoint string, token string) (int, int, time.Duration) {
+
+	req, _ := http.NewRequest("GET", GITHUB_REST_URL+endpoint, nil)
 
 	req.Header.Set("Authorization", "Bearer "+token)
 
@@ -50,5 +52,4 @@ func doRest(url_request string, token string) (int, int, time.Duration) {
 	}
 
 	return len(body), totalRequestSize, duration
-
 }

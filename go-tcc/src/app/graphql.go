@@ -8,11 +8,13 @@ import (
 	"time"
 )
 
-func doGraphQL(url_request string, body string, token string) (int, int, time.Duration) {
+const GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
+
+func doGraphQL(body string, token string) (int, int, time.Duration) {
 
 	payload := bytes.NewBufferString(body)
 
-	req, _ := http.NewRequest(http.MethodPost, url_request, payload)
+	req, _ := http.NewRequest(http.MethodPost, GITHUB_GRAPHQL_URL, payload)
 
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Authorization", "Bearer "+token)
@@ -38,8 +40,8 @@ func doGraphQL(url_request string, body string, token string) (int, int, time.Du
 	}
 
 	if resp.StatusCode != 200 {
-		bodyString := string(body)
-		log.Printf("Erro ao executar requisição GraphQL, body: %v", bodyString)
+		responseString := string(body_response)
+		log.Printf("Erro ao executar requisição GraphQL, body: %v", responseString)
 		return 0, 0, 0
 	}
 
