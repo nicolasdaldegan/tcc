@@ -92,6 +92,11 @@ func runRest(file *os.File, token string) {
 	queries = append(queries, query_media)
 	queries = append(queries, query_grande)
 
+	//aquecer
+	for i := 0; i < 10; i++ {
+		_, _, _ = doRest(queryDefault, token)
+	}
+
 	cont := 1
 
 	var size_response_total int
@@ -135,6 +140,11 @@ func runGraphQL(file *os.File, token string) {
 	queries = append(queries, query1)
 	queries = append(queries, query2)
 	queries = append(queries, query3)
+
+	//aquecer
+	for i := 0; i < 10; i++ {
+		_, _, _ = doGraphQL(query1, token)
+	}
 
 	cont := 1
 
