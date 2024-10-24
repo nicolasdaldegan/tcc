@@ -105,7 +105,7 @@ func runRest(file *os.File, token string) {
 
 	for _, list_query := range queries {
 
-		for i := 0; i < 3; i++ {
+		for i := 0; i < 50; i++ {
 
 			size_response_total = 0
 			size_request_total = 0
@@ -135,7 +135,7 @@ func runGraphQL(file *os.File, token string) {
 
 	var query2 string = "{\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name description issues(first: 2, states: OPEN) { nodes { title createdAt } } } }\"}"
 
-	var query3 string = "{\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name stargazerCount issues(states: OPEN, first: 2) { edges { node { title createdAt } } } pullRequests(last: 2) { edges { node { title mergedAt } } } contributors(first: 2) { edges { node { login } } } } }\"}"
+	var query3 string = "{\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name stargazerCount issues(states: OPEN, first: 2) { edges { node { title createdAt } } } pullRequests(last: 2) { edges { node { title mergedAt } } } mentionableUsers(first: 2) { edges { node { login } } } } }\"}"
 
 	queries = append(queries, query1)
 	queries = append(queries, query2)
@@ -149,8 +149,9 @@ func runGraphQL(file *os.File, token string) {
 	cont := 1
 
 	for _, query := range queries {
-		for i := 0; i < 3; i++ {
+		for i := 0; i < 50; i++ {
 			size_response, size_request, time := doGraphQL(query, token)
+			fmt.Println("size req: ", size_request)
 			result := fmt.Sprintf("Query %d; Tempo: %v; Payload Request: %d; Payload Response: %d\n", cont, time, size_request, size_response)
 			fmt.Print(result)
 			writeToFile(file, result)

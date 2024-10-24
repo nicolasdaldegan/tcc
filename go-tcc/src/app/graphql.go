@@ -14,6 +14,8 @@ func doGraphQL(body string, token string) (int, int, time.Duration) {
 
 	payload := bytes.NewBufferString(body)
 
+	tamanho_request := payload.Len()
+
 	req, _ := http.NewRequest(http.MethodPost, GITHUB_GRAPHQL_URL, payload)
 
 	req.Header.Add("Content-Type", "application/json")
@@ -45,5 +47,5 @@ func doGraphQL(body string, token string) (int, int, time.Duration) {
 		return 0, 0, 0
 	}
 
-	return len(body_response), len(body), duration
+	return len(body_response), tamanho_request, duration
 }

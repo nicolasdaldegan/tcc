@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"io"
 	"log"
 	"net/http"
@@ -16,14 +15,7 @@ func doRest(endpoint string, token string) (int, int, time.Duration) {
 
 	req.Header.Set("Authorization", "Bearer "+token)
 
-	var buf bytes.Buffer
-
-	if err := req.Write(&buf); err != nil {
-		log.Printf("Erro ao escrever requisição: %v", err)
-		return 0, 0, 0
-	}
-
-	totalRequestSize := buf.Len()
+	totalRequestSize := len([]byte(GITHUB_REST_URL + endpoint))
 
 	time_init := time.Now()
 
