@@ -1,3 +1,4 @@
+import json
 import requests
 import time
 
@@ -12,6 +13,9 @@ def do_graphql(body, token):
         "Authorization": f"Bearer {token}"
     }
 
+    payload_str = json.dumps(body)
+    payload_request = len(payload_str.encode('utf-8'))
+
     try:
         time_init = time.time()
         response = session.post(GITHUB_GRAPHQL_URL, json=body, headers=headers, timeout=10)
@@ -23,7 +27,7 @@ def do_graphql(body, token):
 
     if response.status_code == 200:
         body_response = response.content
-        return len(body_response), 0, duration * 1000
+        return len(body_response), payload_request, duration * 1000
     else:
         print(f"Erro na resposta GraphQL: {response.status_code}")
         print(f"Body: {response.text}")

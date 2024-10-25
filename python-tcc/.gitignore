@@ -1,3 +1,4 @@
 .env
 __pycache__
-resultados.txt
+resultados-graphql-python.txt
+resultados-rest-python.txt

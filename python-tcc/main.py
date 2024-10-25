@@ -100,28 +100,68 @@ def run_graphql(file, token):
 
     queries = []
 
-    query1 = (
-        "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { "
-        "name stargazerCount "
-        "} }\"}"
-    )
+    query1 = {
+        "query": """
+            query { 
+                repository(owner: "microsoft", name: "vscode") { 
+                    name 
+                    stargazerCount 
+                } 
+            }
+        """
+    }
 
-    query2 = (
-        "{\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { "
-        "name description "
-        "issues(first: 2, states: OPEN) { nodes { title createdAt } } "
-        "} }\"}"
-    )
+    query2 = {
+        "query": """
+            query { 
+                repository(owner: "vercel", name: "next.js") { 
+                    name 
+                    description 
+                    issues(first: 2, states: OPEN) { 
+                        nodes { 
+                            title 
+                            createdAt 
+                        } 
+                    } 
+                } 
+            }
+        """
+    }
 
-    query3 = (
-        "{\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { "
-        "name stargazerCount "
-        "issues(states: OPEN, first: 2) { edges { node { title createdAt } } } "
-        "pullRequests(last: 2) { edges { node { title mergedAt } } } "
-        "mentionableUsers(first: 2) { edges { node { login } } } "
-        "} }\"}"
-    )
-
+    query3 = {
+        "query": """
+            query { 
+                repository(owner: "facebook", name: "react") { 
+                    name 
+                    stargazerCount 
+                    issues(states: OPEN, first: 2) { 
+                        edges { 
+                            node { 
+                                title 
+                                createdAt 
+                            } 
+                        } 
+                    } 
+                    pullRequests(last: 2) { 
+                        edges { 
+                            node { 
+                                title 
+                                mergedAt 
+                            } 
+                        } 
+                    } 
+                    mentionableUsers(first: 2) { 
+                        edges { 
+                            node { 
+                                login 
+                            } 
+                        } 
+                    } 
+                } 
+            }
+        """
+    }
+    
     queries.append(query1)
     queries.append(query2)
     queries.append(query3)
