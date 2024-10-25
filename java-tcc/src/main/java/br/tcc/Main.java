@@ -137,33 +137,33 @@ public class Main {
         List<Analytics> list_analytics = new ArrayList<>();
         List<String> queries = new ArrayList<>();
 
-        //query básica
+        // query básica
         String query_1 = "{"
-                + "\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { "
-                + "name "
-                + "stargazerCount "
-                + "} }\""
-                + "}";
+            + "\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { "
+            + "name "
+            + "stargazerCount "
+            + "} }\""
+            + "}";
 
-        //query média
+        // query média
         String query_2 = "{"
-                + "\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { "
-                + "name "
-                + "description "
-                + "issues(first: 2, states: OPEN) { nodes { title createdAt } } "
-                + "} }\""
-                + "}";
+            + "\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { "
+            + "name "
+            + "description "
+            + "issues(first: 2, states: OPEN) { nodes { title createdAt } } "
+            + "} }\""
+            + "}";
 
-        //query complexa
+        // query complexa
         String query_3 = "{"
-                + "\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { "
-                + "name "
-                + "stargazerCount "
-                + "issues(states: OPEN, first: 2) { edges { node { title createdAt } } } "
-                + "pullRequests(last: 2) { edges { node { title mergedAt } } } "
-                + "contributors(first: 2) { edges { node { login } } } "
-                + "} }\""
-                + "}";
+            + "\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { "
+            + "name "
+            + "stargazerCount "
+            + "issues(states: OPEN, first: 2) { edges { node { title createdAt } } } "
+            + "pullRequests(last: 2) { edges { node { title mergedAt } } } "
+            + "mentionableUsers(first: 2) { edges { node { login } } } "
+            + "} }\""
+            + "}";
 
         queries.add(query_1);
         queries.add(query_2);
