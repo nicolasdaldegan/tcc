@@ -45,7 +45,7 @@ Antes de navegar pelos diretórios específicos, verifique se você possui as fe
 
 1. **Clone o repositório**:  
    ```bash
-   git clone https://github.com/seu-usuario/tcc.git
+   git clone https://github.com/nicolasdaldegan/tcc.git
    cd tcc
     ```  
 
