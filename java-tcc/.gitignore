@@ -37,6 +37,6 @@ build/
 ### Mac OS ###
 .DS_Store
 .env
-analytics_graphql.txt
-analytics_rest.txt
+#analytics_graphql.txt
+#analytics_rest.txt
 .idea
