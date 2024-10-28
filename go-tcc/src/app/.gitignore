@@ -1,4 +1,4 @@
 .env
-resultados-graphql-go.txt
-resultados-rest-go.txt
+#resultados-graphql-go.txt
+#resultados-rest-go.txt
 resultados.txt

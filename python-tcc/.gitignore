@@ -1,5 +1,5 @@
 .env
 __pycache__
-resultados-graphql-python.txt
-resultados-rest-python.txt
+#resultados-graphql-python.txt
+#resultados-rest-python.txt
 venv
