@@ -124,6 +124,9 @@ public class Main {
                     analytics_use.time_elapsed += analytics_rest.time_elapsed;
                 }
 
+                String result = String.format("Query %d; Tempo: %.2f; Payload Request: %.2f; Payload Response: %.2f\n",
+                    cont, analytics_use.time_elapsed, analytics_use.size_payload_request, analytics_use.size_payload_response);
+                System.out.println(result);
                 list_analytics.add(analytics_use);
             }
             cont++;
@@ -179,9 +182,12 @@ public class Main {
         Integer cont = 1;
 
         for(String query : queries) {
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < 1; i++) {
                 analytics_graphql = RequestGraphQL.doGraphQL(query, cont);
                 list_analytics.add(analytics_graphql);
+                String result = String.format("Query %d; Tempo: %.2f; Payload Request: %.2f; Payload Response: %.2f\n",
+                              cont, analytics_graphql.time_elapsed, analytics_graphql.size_payload_request, analytics_graphql.size_payload_response);
+                System.out.println(result);
             }
             cont++;
         }

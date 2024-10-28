@@ -53,12 +53,6 @@ public class RequestGraphQL {
         analytics.size_payload_request = query.getBytes().length;
         analytics.size_payload_response = responseBody.toString().getBytes().length;
 
-        System.out.println("Query "+ type);
-        System.out.println("Tempo: " + analytics.time_elapsed);
-        System.out.println("Size Request: " + analytics.size_payload_request);
-        System.out.println("Size Response: " + analytics.size_payload_response);
-
-
         return analytics;
     }
 }
