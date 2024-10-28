@@ -111,7 +111,7 @@ public class Main {
         Integer cont = 1;
 
         for(List<String> query : queries) {
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 100; i++) {
 
                 Analytics analytics_use = new Analytics();
 
@@ -182,7 +182,7 @@ public class Main {
         Integer cont = 1;
 
         for(String query : queries) {
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 100; i++) {
                 analytics_graphql = RequestGraphQL.doGraphQL(query, cont);
                 list_analytics.add(analytics_graphql);
                 String result = String.format("Query %d; Tempo: %.2f; Payload Request: %.2f; Payload Response: %.2f\n",
