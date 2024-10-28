@@ -13,12 +13,11 @@ def do_graphql(body, token):
         "Authorization": f"Bearer {token}"
     }
 
-    payload_str = json.dumps(body)
-    payload_request = len(payload_str.encode('utf-8'))
+    payload_request = len(body.encode('utf-8'))
 
     try:
         time_init = time.time()
-        response = session.post(GITHUB_GRAPHQL_URL, json=body, headers=headers, timeout=10)
+        response = session.post(GITHUB_GRAPHQL_URL, data=body, headers=headers, timeout=10)
         duration = time.time() - time_init
     except requests.exceptions.RequestException as e:
         print(f"Erro ao executar requisição GraphQL: {e}")

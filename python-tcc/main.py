@@ -13,17 +13,15 @@ def main():
     parser.add_argument('--mode', default='rest', choices=['rest', 'graphql'], help="Modo: 'rest' ou 'graphql'.")
     args = parser.parse_args()
 
-    print(f"args: {args.mode}")
-
     if args.mode == "rest":
         try:
-            with open('resultados-rest-python.txt', 'a') as file:
+            with open('resultados-rest-python.txt', 'w') as file:
                 run_rest(file, token)
         except OSError as e:
             print(f"Erro ao abrir arquivo: {e}")
     elif args.mode == "graphql":
         try:
-            with open('resultados-graphql-python.txt', 'a') as file:
+            with open('resultados-graphql-python.txt', 'w') as file:
                 run_graphql(file, token)
         except OSError as e:
             print(f"Erro ao abrir arquivo: {e}")
@@ -73,8 +71,10 @@ def run_rest(file, token):
 
     cont = 1
 
+    results = []
+
     for list_queries in queries:
-        for _ in range(3):
+        for _ in range(100):
 
             size_response_total = 0
             size_request_total = 0
@@ -89,79 +89,23 @@ def run_rest(file, token):
 
             result = f"Query {cont}; Tempo: {time_total}; Payload Request: {size_request_total}; Payload Response: {size_response_total}\n"
             print(result)
-            write_to_file(file, result)
+            results.append(result)
 
         cont += 1
 
-    
-        
+    write_to_file(file, ''.join(results))
+
 
 def run_graphql(file, token):
 
     queries = []
 
-    query1 = {
-        "query": """
-            query { 
-                repository(owner: "microsoft", name: "vscode") { 
-                    name 
-                    stargazerCount 
-                } 
-            }
-        """
-    }
+    query1 = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount } }\"}"
 
-    query2 = {
-        "query": """
-            query { 
-                repository(owner: "vercel", name: "next.js") { 
-                    name 
-                    description 
-                    issues(first: 2, states: OPEN) { 
-                        nodes { 
-                            title 
-                            createdAt 
-                        } 
-                    } 
-                } 
-            }
-        """
-    }
+    query2 = "{\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name description issues(first: 2, states: OPEN) { nodes { title createdAt } } } }\"}"
 
-    query3 = {
-        "query": """
-            query { 
-                repository(owner: "facebook", name: "react") { 
-                    name 
-                    stargazerCount 
-                    issues(states: OPEN, first: 2) { 
-                        edges { 
-                            node { 
-                                title 
-                                createdAt 
-                            } 
-                        } 
-                    } 
-                    pullRequests(last: 2) { 
-                        edges { 
-                            node { 
-                                title 
-                                mergedAt 
-                            } 
-                        } 
-                    } 
-                    mentionableUsers(first: 2) { 
-                        edges { 
-                            node { 
-                                login 
-                            } 
-                        } 
-                    } 
-                } 
-            }
-        """
-    }
-    
+    query3 = "{\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name stargazerCount issues(states: OPEN, first: 2) { edges { node { title createdAt } } } pullRequests(last: 2) { edges { node { title mergedAt } } } mentionableUsers(first: 2) { edges { node { login } } } } }\"}"
+
     queries.append(query1)
     queries.append(query2)
     queries.append(query3)
@@ -172,14 +116,18 @@ def run_graphql(file, token):
 
     cont = 1
 
+    results = []
+
     for query in queries:
-        for _ in range(3):
+        for _ in range(100):
             size_response, size_request, duration = do_graphql(query, token)
             result = f"Query {cont}; Tempo: {duration}; Payload Request: {size_request}; Payload Response: {size_response}\n"
             print(result)
-            write_to_file(file, result)
+            results.append(result)
         cont += 1
         
+    write_to_file(file, ''.join(results))
+    
 
 def write_to_file(file, data):
     try:
