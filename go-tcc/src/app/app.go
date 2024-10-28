@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -28,7 +29,7 @@ func main() {
 
 	if *mode == "rest" {
 
-		file, err := os.OpenFile("resultados-rest-go.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		file, err := os.Create("resultados-rest-go.txt")
 
 		if err != nil {
 			log.Fatalf("Erro ao abrir arquivo: %v", err)
@@ -40,7 +41,7 @@ func main() {
 
 	} else if *mode == "graphql" {
 
-		file, err := os.OpenFile("resultados-graphql-go.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		file, err := os.Create("resultados-graphql-go.txt")
 
 		if err != nil {
 			log.Fatalf("Erro ao abrir arquivo: %v", err)
@@ -103,9 +104,11 @@ func runRest(file *os.File, token string) {
 	var size_request_total int
 	var time_total time.Duration
 
+	var results []string
+
 	for _, list_query := range queries {
 
-		for i := 0; i < 50; i++ {
+		for i := 0; i < 100; i++ {
 
 			size_response_total = 0
 			size_request_total = 0
@@ -121,10 +124,13 @@ func runRest(file *os.File, token string) {
 
 			result := fmt.Sprintf("Query %d; Tempo: %v; Payload Request: %d; Payload Response: %d\n", cont, time_total, size_request_total, size_response_total)
 			fmt.Print(result)
-			writeToFile(file, result)
+			results = append(results, result)
 		}
 		cont++
 	}
+
+	data := strings.Join(results, "")
+	writeToFile(file, data)
 }
 
 func runGraphQL(file *os.File, token string) {
@@ -148,16 +154,20 @@ func runGraphQL(file *os.File, token string) {
 
 	cont := 1
 
+	var results []string
+
 	for _, query := range queries {
-		for i := 0; i < 50; i++ {
+		for i := 0; i < 100; i++ {
 			size_response, size_request, time := doGraphQL(query, token)
-			fmt.Println("size req: ", size_request)
 			result := fmt.Sprintf("Query %d; Tempo: %v; Payload Request: %d; Payload Response: %d\n", cont, time, size_request, size_response)
 			fmt.Print(result)
-			writeToFile(file, result)
+			results = append(results, result)
 		}
 		cont++
 	}
+
+	data := strings.Join(results, "")
+	writeToFile(file, data)
 
 }
 
