@@ -37,16 +37,21 @@ sns.swarmplot(y="Tipo", x="Tempo", data=df, color="black", size=4, zorder=3)
 plt.xscale("log")
 plt.autoscale(enable=True, axis='x', tight=True)
 
-plt.axvline(x=100, color='gray', linestyle='--', linewidth=0.8)
-plt.axvline(x=200, color='gray', linestyle='--', linewidth=0.8)
-plt.axvline(x=300, color='gray', linestyle='--', linewidth=0.8)
+plt.xlim(100, 1000)
 
-midpoint1 = np.sqrt(100 * 200)
-midpoint2 = np.sqrt(200 * 300)
-plt.axvline(x=midpoint1, color='gray', linestyle='--', linewidth=0.8)
-plt.axvline(x=midpoint2, color='gray', linestyle='--', linewidth=0.8)
+xticks = [100, 200, 300, 400, 500, 700, 1000]
+plt.xticks(xticks, [r"$10^2$" if x == 100 else r"$10^3$" if x == 1000 else f"${int(x/100)} \\times 10^2$" for x in xticks])
 
-plt.title("Query 1 - Rest - Python")
+plt.minorticks_off()
+
+line_color = 'gray'
+line_style = '--'
+line_width = 1.2
+
+for x in xticks + [150, 250, 350, 450, 600, 800]:
+    plt.axvline(x=x, color=line_color, linestyle=line_style, linewidth=line_width)
+
+plt.title("Name")
 plt.xlabel("Duration (ms) (log10)")
 plt.ylabel("")
 
