@@ -137,9 +137,9 @@ func runGraphQL(file *os.File, token string) {
 
 	queries := []string{}
 
-	var query1 string = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount description createdAt updatedAt forkCount language { name } watchers { totalCount } } }\"}"
+	var query1 string = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount description createdAt updatedAt forkCount diskUsage homepageUrl isPrivate isArchived isFork primaryLanguage { name } pushedAt watchers { totalCount } } }\"}"
 
-	var query2 string = "{\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name description stargazerCount forkCount issues(first: 2, states: OPEN) { nodes { title createdAt bodyText number state updatedAt author { login } } } } }\"}"
+	var query2 string = "{\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name description stargazerCount forkCount diskUsage homepageUrl isPrivate isArchived isFork isTemplate licenseInfo { name } primaryLanguage { name } pushedAt openGraphImageUrl issues(first: 2, states: OPEN) { nodes { title createdAt bodyText number state updatedAt author { login } } } } }\"}"
 
 	var query3 string = "{\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name stargazerCount description createdAt updatedAt forkCount watchers { totalCount } issues(states: OPEN, first: 2) { edges { node { title createdAt bodyText number state updatedAt authorAssociation comments { totalCount } } } } pullRequests(last: 2) { edges { node { title createdAt mergedAt additions deletions changedFiles number state updatedAt isDraft mergeable comments { totalCount } reviews { totalCount } } } } mentionableUsers(first: 2) { edges { node { login bio avatarUrl location company email createdAt isEmployee repositories { totalCount } } } } } }\"}"
 
