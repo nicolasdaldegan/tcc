@@ -147,16 +147,8 @@ public class Main {
             + "stargazerCount "
             + "description "
             + "createdAt "
-            + "updatedAt "
             + "forkCount "
-            + "diskUsage "
-            + "homepageUrl "
-            + "isPrivate "
-            + "isArchived "
-            + "isFork "
-            + "primaryLanguage { name } "
             + "pushedAt "
-            + "watchers { totalCount } "
             + "} }\""
             + "}";
 

@@ -100,7 +100,7 @@ def run_graphql(file, token):
 
     queries = []
 
-    query1 = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount description createdAt updatedAt forkCount diskUsage homepageUrl isPrivate isArchived isFork primaryLanguage { name } pushedAt watchers { totalCount } } }\"}"
+    query1 = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount description createdAt forkCount pushedAt } }\"}"
 
     query2 = "{\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name description stargazerCount forkCount diskUsage homepageUrl isPrivate isArchived isFork isTemplate licenseInfo { name } primaryLanguage { name } pushedAt openGraphImageUrl issues(first: 2, states: OPEN) { nodes { title createdAt bodyText number state updatedAt author { login } } } } }\"}"
 

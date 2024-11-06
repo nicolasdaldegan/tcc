@@ -137,7 +137,7 @@ func runGraphQL(file *os.File, token string) {
 
 	queries := []string{}
 
-	var query1 string = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount description createdAt updatedAt forkCount diskUsage homepageUrl isPrivate isArchived isFork primaryLanguage { name } pushedAt watchers { totalCount } } }\"}"
+	var query1 string = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount description createdAt forkCount pushedAt } }\"}"
 
 	var query2 string = "{\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name description stargazerCount forkCount diskUsage homepageUrl isPrivate isArchived isFork isTemplate licenseInfo { name } primaryLanguage { name } pushedAt openGraphImageUrl issues(first: 2, states: OPEN) { nodes { title createdAt bodyText number state updatedAt author { login } } } } }\"}"
 
