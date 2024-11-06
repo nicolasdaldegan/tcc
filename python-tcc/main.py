@@ -100,11 +100,11 @@ def run_graphql(file, token):
 
     queries = []
 
-    query1 = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount } }\"}"
+    query1 = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount description createdAt updatedAt forkCount language { name } watchers { totalCount } } }\"}"
 
-    query2 = "{\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name description issues(first: 2, states: OPEN) { nodes { title createdAt } } } }\"}"
+    query2 = "{\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name description stargazerCount forkCount issues(first: 2, states: OPEN) { nodes { title createdAt bodyText number state updatedAt author { login } } } } }\"}"
 
-    query3 = "{\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name stargazerCount issues(states: OPEN, first: 2) { edges { node { title createdAt } } } pullRequests(last: 2) { edges { node { title mergedAt } } } mentionableUsers(first: 2) { edges { node { login } } } } }\"}"
+    query3 = "{\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name stargazerCount description createdAt updatedAt forkCount watchers { totalCount } issues(states: OPEN, first: 2) { edges { node { title createdAt bodyText number state updatedAt authorAssociation comments { totalCount } } } } pullRequests(last: 2) { edges { node { title createdAt mergedAt additions deletions changedFiles number state updatedAt isDraft mergeable comments { totalCount } reviews { totalCount } } } } mentionableUsers(first: 2) { edges { node { login bio avatarUrl location company email createdAt isEmployee repositories { totalCount } } } } } }\"}"
 
     queries.append(query1)
     queries.append(query2)
