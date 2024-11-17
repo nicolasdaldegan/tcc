@@ -2,57 +2,90 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import re
-import numpy as np
 
 def extrair_tempos(caminho_arquivo):
     tempos = []
     with open(caminho_arquivo, "r") as file:
         for linha in file:
-            match = re.search(r"Tempo: ([\d.]+);", linha)
+            match = re.search(r"Tempo: ([\d.]+)ms;", linha)
             if match:
                 tempos.append(float(match.group(1)))
     return tempos
 
-#rodar para cada query de cada linguagem
-#ter um txt com as linhas neste formato:
-#Tempo: 137.95733451843262;
-tempos_rest = extrair_tempos(".txt")
-tempos_graphql = extrair_tempos(".txt")
+arquivos = {
+    "Query 1": {
+        "Go": ["QUERY1-REST-GO.txt", "QUERY1-GRAPHQL-GO.txt"],
+        "Java": ["QUERY1-REST-JAVA.txt", "QUERY1-GRAPHQL-JAVA.txt"],
+        "Python": ["QUERY1-REST-PYTHON.txt", "QUERY1-GRAPHQL-PYTHON.txt"]
+    },
+    "Query 2": {
+        "Go": ["QUERY2-REST-GO.txt", "QUERY2-GRAPHQL-GO.txt"],
+        "Java": ["QUERY2-REST-JAVA.txt", "QUERY2-GRAPHQL-JAVA.txt"],
+        "Python": ["QUERY2-REST-PYTHON.txt", "QUERY2-GRAPHQL-PYTHON.txt"]
+    },
+    "Query 3": {
+        "Go": ["QUERY3-REST-GO.txt", "QUERY3-GRAPHQL-GO.txt"],
+        "Java": ["QUERY3-REST-JAVA.txt", "QUERY3-GRAPHQL-JAVA.txt"],
+        "Python": ["QUERY3-REST-PYTHON.txt", "QUERY3-GRAPHQL-PYTHON.txt"]
+    }
+}
 
-df = pd.DataFrame({
-    "Tempo": tempos_rest + tempos_graphql,
-    "Tipo": ["REST"] * len(tempos_rest) + ["GraphQL"] * len(tempos_graphql)
-})
+data = []
+for query, linguagens in arquivos.items():
+    for linguagem, (rest_file, graphql_file) in linguagens.items():
+        tempos_rest = extrair_tempos(f"C:/Users/nicolas.vespucio_evo/Desktop/txts-filtrados-3/{rest_file}")
+        tempos_graphql = extrair_tempos(f"C:/Users/nicolas.vespucio_evo/Desktop/txts-filtrados-3/{graphql_file}")
+        for tempo in tempos_rest:
+            data.append({"Tempo": tempo, "Tipo": "REST", "Query": query, "Linguagem": linguagem})
+        for tempo in tempos_graphql:
+            data.append({"Tempo": tempo, "Tipo": "GraphQL", "Query": query, "Linguagem": linguagem})
+
+df = pd.DataFrame(data)
+
+def violin_box_swarm(data, x, y, ax):
+    sns.violinplot(data=data, x=x, y=y, inner=None, linewidth=1.5, width=0.7, color="white", ax=ax)
+
+    sns.boxplot(
+        data=data, x=x, y=y, width=0.2, whis=[5, 95], showcaps=False,
+        boxprops={'facecolor': 'lightgrey', 'edgecolor': 'black', 'linewidth': 2, 'alpha': 0.7, 'zorder': 3},
+        whiskerprops={'linewidth': 2, 'color': 'black', 'zorder': 3},  # Linhas dos bigodes
+        flierprops={'marker': 'o', 'markersize': 5, 'markerfacecolor': 'black', 'zorder': 4},  # Outliers
+        medianprops={'color': 'red', 'linewidth': 2, 'zorder': 4},  # Linha da mediana destacada
+        ax=ax
+    )
+
+    sns.swarmplot(data=data, x=x, y=y, color="black", size=4, zorder=5, ax=ax)
+
 
 sns.set(style="whitegrid", rc={"axes.facecolor": "0.9"})
-plt.figure(figsize=(10, 6))
 
-sns.violinplot(y="Tipo", x="Tempo", data=df, inner=None, color="white", linewidth=1.5)
+for query in arquivos.keys():
+    df_query = df[df["Query"] == query]
 
-sns.boxplot(y="Tipo", x="Tempo", data=df, whis=[5, 95], width=0.2,
-            boxprops={'facecolor':'None'}, showcaps=False, whiskerprops={'linewidth':1.5}, zorder=2)
+    fig, axes = plt.subplots(nrows=3, figsize=(8, 14), sharex=True, gridspec_kw={'height_ratios': [1, 1, 1.5]})
+    fig.suptitle(f"Desempenho REST vs GraphQL - {query}", fontsize=14)
 
-sns.swarmplot(y="Tipo", x="Tempo", data=df, color="black", size=4, zorder=3)
+    for (linguagem, ax) in zip(["Go", "Java", "Python"], axes):
+        data_linguagem = df_query[df_query["Linguagem"] == linguagem]
+        violin_box_swarm(data=data_linguagem, x="Tempo", y="Tipo", ax=ax)
+        ax.set_title(linguagem, fontsize=12)
+        ax.set_xscale("log")
 
-plt.xscale("log")
-plt.autoscale(enable=True, axis='x', tight=True)
+        min_tempo = data_linguagem["Tempo"].min() * 0.8
+        max_tempo = data_linguagem["Tempo"].max() * 1.2
+        ax.set_xlim(min_tempo, max_tempo)
 
-plt.xlim(100, 1000)
+        xticks = [tick for tick in [100, 200, 300, 400, 500, 600, 700, 800, 1000] if min_tempo <= tick <= max_tempo]
+        ax.set_xticks(xticks)
+        ax.set_xticklabels([f"$10^{int(i)}$" if i == 10 else f"${int(i / 100)} \\times 10^2$" for i in xticks])
 
-xticks = [100, 200, 300, 400, 500, 700, 1000]
-plt.xticks(xticks, [r"$10^2$" if x == 100 else r"$10^3$" if x == 1000 else f"${int(x/100)} \\times 10^2$" for x in xticks])
+        for tick in xticks:
+            ax.axvline(x=tick, color="gray", linestyle="--", linewidth=1.2)
 
-plt.minorticks_off()
+        ax.set_xlabel("Tempo (ms) (log10)")
+        ax.set_ylabel("")
 
-line_color = 'gray'
-line_style = '--'
-line_width = 1.2
-
-for x in xticks + [150, 250, 350, 450, 600, 800]:
-    plt.axvline(x=x, color=line_color, linestyle=line_style, linewidth=line_width)
-
-plt.title("Name")
-plt.xlabel("Duration (ms) (log10)")
-plt.ylabel("")
-
-plt.show()
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.subplots_adjust(bottom=0.1)
+    plt.savefig(f"Desempenho_{query}.png", dpi=300, bbox_inches='tight')
+    plt.show()
