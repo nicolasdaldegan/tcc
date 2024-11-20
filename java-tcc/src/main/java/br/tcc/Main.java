@@ -67,8 +67,8 @@ public class Main {
         List<String> query_3 = new ArrayList<>();
 
         //query básica
-        //repos/microsoft/vscode
-        String query_default = "repos/microsoft/vscode";
+        //repos/vercel/next.js
+        String query_default = "repos/vercel/next.js";
         query_1.add(query_default);
 
         //query média
@@ -81,20 +81,20 @@ public class Main {
         query_2.add(query_default);
 
         //query grande
-        //repos/facebook/react
-        //repos/facebook/react/issues?state=open&per_page=2
-        //repos/facebook/react/pulls?state=all&per_page=2
-        //repos/facebook/react/contributors?per_page=2
-        query_default = "repos/facebook/react";
+        //repos/vercel/next.js
+        //repos/vercel/next.js/issues?state=open&per_page=2
+        //repos/vercel/next.js/pulls?state=all&per_page=2
+        //repos/vercel/next.js/contributors?per_page=2
+        query_default = "repos/vercel/next.js";
         query_3.add(query_default);
 
-        query_default = "repos/facebook/react/issues?state=open&per_page=2";
+        query_default = "repos/vercel/next.js/issues?state=open&per_page=2";
         query_3.add(query_default);
 
-        query_default = "repos/facebook/react/pulls?state=all&per_page=2";
+        query_default = "repos/vercel/next.js/pulls?state=all&per_page=2";
         query_3.add(query_default);
 
-        query_default = "repos/facebook/react/contributors?per_page=2";
+        query_default = "repos/vercel/next.js/contributors?per_page=2";
         query_3.add(query_default);
 
         queries.add(query_1);
@@ -142,7 +142,7 @@ public class Main {
 
         // query básica
         String query_1 = "{"
-            + "\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { "
+            + "\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { "
             + "name "
             + "stargazerCount "
             + "description "
@@ -185,7 +185,7 @@ public class Main {
 
         // query complexa
         String query_3 = "{"
-            + "\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { "
+            + "\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { "
             + "name "
             + "stargazerCount "
             + "description "
