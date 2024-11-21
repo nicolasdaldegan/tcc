@@ -66,27 +66,27 @@ func runRest(file *os.File, token string) {
 	query_grande := []string{}
 
 	//query simples
-	queryDefault := "repos/vercel/next.js"
+	queryDefault := "repos/microsoft/vscode"
 	query_simples = append(query_simples, queryDefault)
 
 	//query media
-	queryDefault = "repos/vercel/next.js"
+	queryDefault = "repos/microsoft/vscode"
 	query_media = append(query_media, queryDefault)
 
-	queryDefault = "repos/vercel/next.js/issues?state=open&per_page=2"
+	queryDefault = "repos/microsoft/vscode/issues?state=open&per_page=2"
 	query_media = append(query_media, queryDefault)
 
 	//query grande
-	queryDefault = "repos/vercel/next.js"
+	queryDefault = "repos/microsoft/vscode"
 	query_grande = append(query_grande, queryDefault)
 
-	queryDefault = "repos/vercel/next.js/issues?state=open&per_page=2"
+	queryDefault = "repos/microsoft/vscode/issues?state=open&per_page=2"
 	query_grande = append(query_grande, queryDefault)
 
-	queryDefault = "repos/vercel/next.js/pulls?state=all&per_page=2"
+	queryDefault = "repos/microsoft/vscode/pulls?state=all&per_page=2"
 	query_grande = append(query_grande, queryDefault)
 
-	queryDefault = "repos/vercel/next.js/contributors?per_page=2"
+	queryDefault = "repos/microsoft/vscode/contributors?per_page=2"
 	query_grande = append(query_grande, queryDefault)
 
 	queries = append(queries, query_simples)
@@ -137,11 +137,11 @@ func runGraphQL(file *os.File, token string) {
 
 	queries := []string{}
 
-	var query1 string = "{\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name stargazerCount description createdAt forkCount pushedAt } }\"}"
+	var query1 string = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount description createdAt forkCount pushedAt } }\"}"
 
-	var query2 string = "{\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name description stargazerCount forkCount diskUsage homepageUrl isPrivate isArchived isFork isTemplate licenseInfo { name } primaryLanguage { name } pushedAt openGraphImageUrl issues(first: 2, states: OPEN) { nodes { title createdAt bodyText number state updatedAt author { login } } } } }\"}"
+	var query2 string = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name description stargazerCount forkCount diskUsage homepageUrl isPrivate isArchived isFork isTemplate licenseInfo { name } primaryLanguage { name } pushedAt openGraphImageUrl issues(first: 2, states: OPEN) { nodes { title createdAt bodyText number state updatedAt author { login } } } } }\"}"
 
-	var query3 string = "{\"query\": \"query { repository(owner: \\\"vercel\\\", name: \\\"next.js\\\") { name stargazerCount description createdAt updatedAt forkCount watchers { totalCount } issues(states: OPEN, first: 2) { edges { node { title createdAt bodyText number state updatedAt authorAssociation comments { totalCount } } } } pullRequests(last: 2) { edges { node { title createdAt mergedAt additions deletions changedFiles number state updatedAt isDraft mergeable comments { totalCount } reviews { totalCount } } } } mentionableUsers(first: 2) { edges { node { login bio avatarUrl location company email createdAt isEmployee repositories { totalCount } } } } } }\"}"
+	var query3 string = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount description createdAt updatedAt forkCount watchers { totalCount } issues(states: OPEN, first: 2) { edges { node { title createdAt bodyText number state updatedAt authorAssociation comments { totalCount } } } } pullRequests(last: 2) { edges { node { title createdAt mergedAt additions deletions changedFiles number state updatedAt isDraft mergeable comments { totalCount } reviews { totalCount } } } } mentionableUsers(first: 2) { edges { node { login bio avatarUrl location company email createdAt isEmployee repositories { totalCount } } } } } }\"}"
 
 	queries = append(queries, query1)
 	queries = append(queries, query2)
