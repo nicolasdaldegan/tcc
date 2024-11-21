@@ -108,7 +108,7 @@ func runRest(file *os.File, token string) {
 
 	for _, list_query := range queries {
 
-		for i := 0; i < 5; i++ {
+		for i := 0; i < 100; i++ {
 
 			size_response_total = 0
 			size_request_total = 0
@@ -157,7 +157,7 @@ func runGraphQL(file *os.File, token string) {
 	var results []string
 
 	for _, query := range queries {
-		for i := 0; i < 5; i++ {
+		for i := 0; i < 100; i++ {
 			size_response, size_request, time := doGraphQL(query, token)
 			result := fmt.Sprintf("Query %d; Tempo: %v; Payload Request: %d; Payload Response: %d\n", cont, time, size_request, size_response)
 			fmt.Print(result)

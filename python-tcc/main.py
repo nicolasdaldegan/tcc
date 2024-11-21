@@ -74,7 +74,7 @@ def run_rest(file, token):
     results = []
 
     for list_queries in queries:
-        for _ in range(5):
+        for _ in range(100):
 
             size_response_total = 0
             size_request_total = 0
@@ -119,7 +119,7 @@ def run_graphql(file, token):
     results = []
 
     for query in queries:
-        for _ in range(5):
+        for _ in range(100):
             size_response, size_request, duration = do_graphql(query, token)
             result = f"Query {cont}; Tempo: {duration}; Payload Request: {size_request}; Payload Response: {size_response}\n"
             print(result)
