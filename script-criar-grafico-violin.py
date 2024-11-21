@@ -33,8 +33,8 @@ arquivos = {
 data = []
 for query, linguagens in arquivos.items():
     for linguagem, (rest_file, graphql_file) in linguagens.items():
-        tempos_rest = extrair_tempos(f"C:/Users/nicolas.vespucio_evo/Desktop/txts-filtrados-3/{rest_file}")
-        tempos_graphql = extrair_tempos(f"C:/Users/nicolas.vespucio_evo/Desktop/txts-filtrados-3/{graphql_file}")
+        tempos_rest = extrair_tempos(f"C:/Users/nicolas.vespucio_evo/Desktop/queries-filtradas/{rest_file}")
+        tempos_graphql = extrair_tempos(f"C:/Users/nicolas.vespucio_evo/Desktop/queries-filtradas/{graphql_file}")
         for tempo in tempos_rest:
             data.append({"Tempo": tempo, "Tipo": "REST", "Query": query, "Linguagem": linguagem})
         for tempo in tempos_graphql:
@@ -75,17 +75,25 @@ for query in arquivos.keys():
         max_tempo = data_linguagem["Tempo"].max() * 1.2
         ax.set_xlim(min_tempo, max_tempo)
 
-        xticks = [tick for tick in [100, 200, 300, 400, 500, 600, 700, 800, 1000] if min_tempo <= tick <= max_tempo]
-        ax.set_xticks(xticks)
-        ax.set_xticklabels([f"$10^{int(i)}$" if i == 10 else f"${int(i / 100)} \\times 10^2$" for i in xticks])
+        custom_ticks = [100, 200, 300, 400, 500, 600, 700, 800, 1000, 1200, 1400, 1600, 1800, 2000]
+        custom_ticks = [tick for tick in custom_ticks if
+                        min_tempo <= tick <= max_tempo]
 
-        for tick in xticks:
+        ax.set_xticks(custom_ticks)
+        ax.set_xticklabels(
+            [f"$10^{{{int(i / 1000)}}}$" if i % 1000 == 0 else f"${int(i / 100)} \\times 10^2$" for i in custom_ticks],
+            fontsize=10,
+            rotation=45,
+            ha='right'
+        )
+
+        for tick in custom_ticks:
             ax.axvline(x=tick, color="gray", linestyle="--", linewidth=1.2)
 
-        ax.set_xlabel("Tempo (ms) (log10)")
+        ax.set_xlabel("Tempo (ms)")
         ax.set_ylabel("")
 
     plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.subplots_adjust(bottom=0.1)
+    plt.subplots_adjust(bottom=0.15)
     plt.savefig(f"Desempenho_{query}.png", dpi=300, bbox_inches='tight')
     plt.show()
