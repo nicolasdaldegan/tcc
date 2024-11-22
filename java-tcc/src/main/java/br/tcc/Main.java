@@ -67,34 +67,34 @@ public class Main {
         List<String> query_3 = new ArrayList<>();
 
         //query básica
-        //repos/facebook/react
-        String query_default = "repos/facebook/react";
+        //repos/microsoft/vscode
+        String query_default = "repos/microsoft/vscode";
         query_1.add(query_default);
 
         //query média
-        //repos/facebook/react
-        //repos/facebook/react/issues?state=open&per_page=2
-        query_default = "repos/facebook/react";
+        //repos/microsoft/vscode
+        //repos/microsoft/vscode/issues?state=open&per_page=2
+        query_default = "repos/microsoft/vscode";
         query_2.add(query_default);
 
-        query_default = "repos/facebook/react/issues?state=open&per_page=2";
+        query_default = "repos/microsoft/vscode/issues?state=open&per_page=2";
         query_2.add(query_default);
 
         //query grande
-        //repos/facebook/react
-        //repos/facebook/react/issues?state=open&per_page=2
-        //repos/facebook/react/pulls?state=all&per_page=2
-        //repos/facebook/react/contributors?per_page=2
-        query_default = "repos/facebook/react";
+        //repos/microsoft/vscode
+        //repos/microsoft/vscode/issues?state=open&per_page=2
+        //repos/microsoft/vscode/pulls?state=all&per_page=2
+        //repos/microsoft/vscode/contributors?per_page=2
+        query_default = "repos/microsoft/vscode";
         query_3.add(query_default);
 
-        query_default = "repos/facebook/react/issues?state=open&per_page=2";
+        query_default = "repos/microsoft/vscode/issues?state=open&per_page=2";
         query_3.add(query_default);
 
-        query_default = "repos/facebook/react/pulls?state=all&per_page=2";
+        query_default = "repos/microsoft/vscode/pulls?state=all&per_page=2";
         query_3.add(query_default);
 
-        query_default = "repos/facebook/react/contributors?per_page=2";
+        query_default = "repos/microsoft/vscode/contributors?per_page=2";
         query_3.add(query_default);
 
         queries.add(query_1);
@@ -142,7 +142,7 @@ public class Main {
 
         // query básica
         String query_1 = "{"
-            + "\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { "
+            + "\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { "
             + "name "
             + "stargazerCount "
             + "description "
@@ -154,7 +154,7 @@ public class Main {
 
         // query média
         String query_2 = "{"
-            + "\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { "
+            + "\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { "
             + "name "
             + "description "
             + "stargazerCount "
@@ -185,7 +185,7 @@ public class Main {
 
         // query complexa
         String query_3 = "{"
-            + "\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { "
+            + "\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { "
             + "name "
             + "stargazerCount "
             + "description "

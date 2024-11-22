@@ -38,27 +38,27 @@ def run_rest(file, token):
     query_grande = []
 
     # Query simples
-    queryDefault = "repos/facebook/react"
+    queryDefault = "repos/microsoft/vscode"
     query_simples.append(queryDefault)
 
     # Query média
-    queryDefault = "repos/facebook/react"
+    queryDefault = "repos/microsoft/vscode"
     query_media.append(queryDefault)
 
-    queryDefault = "repos/facebook/react/issues?state=open&per_page=2"
+    queryDefault = "repos/microsoft/vscode/issues?state=open&per_page=2"
     query_media.append(queryDefault)
 
     # Query grande
-    queryDefault = "repos/facebook/react"
+    queryDefault = "repos/microsoft/vscode"
     query_grande.append(queryDefault)
 
-    queryDefault = "repos/facebook/react/issues?state=open&per_page=2"
+    queryDefault = "repos/microsoft/vscode/issues?state=open&per_page=2"
     query_grande.append(queryDefault)
 
-    queryDefault = "repos/facebook/react/pulls?state=all&per_page=2"
+    queryDefault = "repos/microsoft/vscode/pulls?state=all&per_page=2"
     query_grande.append(queryDefault)
 
-    queryDefault = "repos/facebook/react/contributors?per_page=2"
+    queryDefault = "repos/microsoft/vscode/contributors?per_page=2"
     query_grande.append(queryDefault)
 
     queries.append(query_simples)
@@ -100,11 +100,11 @@ def run_graphql(file, token):
 
     queries = []
 
-    query1 = "{\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name stargazerCount description createdAt forkCount pushedAt } }\"}"
+    query1 = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount description createdAt forkCount pushedAt } }\"}"
 
-    query2 = "{\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name description stargazerCount forkCount diskUsage homepageUrl isPrivate isArchived isFork isTemplate licenseInfo { name } primaryLanguage { name } pushedAt openGraphImageUrl issues(first: 2, states: OPEN) { nodes { title createdAt bodyText number state updatedAt author { login } } } } }\"}"
+    query2 = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name description stargazerCount forkCount diskUsage homepageUrl isPrivate isArchived isFork isTemplate licenseInfo { name } primaryLanguage { name } pushedAt openGraphImageUrl issues(first: 2, states: OPEN) { nodes { title createdAt bodyText number state updatedAt author { login } } } } }\"}"
 
-    query3 = "{\"query\": \"query { repository(owner: \\\"facebook\\\", name: \\\"react\\\") { name stargazerCount description createdAt updatedAt forkCount watchers { totalCount } issues(states: OPEN, first: 2) { edges { node { title createdAt bodyText number state updatedAt authorAssociation comments { totalCount } } } } pullRequests(last: 2) { edges { node { title createdAt mergedAt additions deletions changedFiles number state updatedAt isDraft mergeable comments { totalCount } reviews { totalCount } } } } mentionableUsers(first: 2) { edges { node { login bio avatarUrl location company email createdAt isEmployee repositories { totalCount } } } } } }\"}"
+    query3 = "{\"query\": \"query { repository(owner: \\\"microsoft\\\", name: \\\"vscode\\\") { name stargazerCount description createdAt updatedAt forkCount watchers { totalCount } issues(states: OPEN, first: 2) { edges { node { title createdAt bodyText number state updatedAt authorAssociation comments { totalCount } } } } pullRequests(last: 2) { edges { node { title createdAt mergedAt additions deletions changedFiles number state updatedAt isDraft mergeable comments { totalCount } reviews { totalCount } } } } mentionableUsers(first: 2) { edges { node { login bio avatarUrl location company email createdAt isEmployee repositories { totalCount } } } } } }\"}"
 
     queries.append(query1)
     queries.append(query2)
