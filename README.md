@@ -123,8 +123,3 @@ Os resultados reforçam que **a escolha entre REST e GraphQL deve ser baseada no
 Os dados e análises deste repositório fornecem uma base sólida para a decisão informada entre as duas arquiteturas, especialmente em projetos que envolvem diferentes níveis de complexidade e linguagens de programação.  
 
 Para mais detalhes sobre a execução e os dados coletados, consulte os arquivos nos diretórios `java-tcc/`, `go-tcc/` e `python-tcc/`.
-Os dados e análises deste repositório fornecem uma base sólida para a decisão informada entre as duas arquiteturas, especialmente em projetos que envolvem diferentes níveis de complexidade e linguagens de programação.  
-
-Para mais detalhes sobre a execução e os dados coletados, consulte os arquivos nos diretórios `java-tcc/`, `go-tcc/` e `python-tcc/`.
-
-
