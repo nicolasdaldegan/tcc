@@ -70,4 +70,61 @@ Cada projeto realiza a mesma consulta em REST e GraphQL utilizando a API do GitH
 - **Desempenho:** Tempo total de resposta para cada abordagem
 - **Tamanho do Payload:** Verificação do tamanho dos dados enviados e recebidos
 - **Latência e eficiência:** Como cada linguagem e abordagem lida com as consultas em diferentes condições
-Os resultados coletados serão analisados e apresentados no artigo científico associado ao projeto.
+
+As consultas foram implementadas em três linguagens de programação – **Go**, **Java** e **Python** – em um ambiente controlado e isolado, utilizando uma instância AWS EC2. Cada tipo de consulta foi executado 100 vezes para obter resultados confiáveis e estatisticamente significativos. Além disso, gráficos de violin plot com box plot foram gerados para representar visualmente os resultados coletados.
+
+---
+
+## Resultados e Conclusões  
+
+Com base nas medições realizadas, este projeto apresenta os seguintes principais resultados e análises comparativas:  
+
+- **GraphQL se destacou em consultas complexas**: A abordagem foi mais eficiente ao consolidar dados de múltiplas fontes em uma única requisição, reduzindo o problema de under-fetching e eliminando conexões redundantes.  
+
+- **REST demonstrou previsibilidade e simplicidade**: Em cenários de consultas simples, REST ofereceu maior estabilidade e consistência, sendo ideal para aplicações que não demandam alta flexibilidade.  
+
+### Destaques dos Resultados  
+
+1. **Desempenho em Consultas**  
+   - **GraphQL foi até 54% mais rápido** em consultas complexas, graças à sua capacidade de consolidar dados em uma única chamada.  
+   - Em consultas simples, o **REST apresentou desempenho competitivo**, com uma diferença menor em relação ao GraphQL.
+
+   **Gráfico Comparativo de Tempos de Resposta (Query Simples)**  
+   ![Gráfico Query Simples](gráficos-tcc/query_1_imagem.jpg)  
+
+   **Gráfico Comparativo de Tempos de Resposta (Query Média)**  
+   ![Gráfico Query Média](gráficos-tcc/query_2_imagem.jpg)  
+
+   **Gráfico Comparativo de Tempos de Resposta (Query Complexa)**  
+   ![Gráfico Query Complexa](gráficos-tcc/query_3_imagem.jpg)  
+
+2. **Tamanhos dos Payloads**  
+   - O GraphQL retornou respostas significativamente menores, com uma redução de até **96% no tamanho das respostas**, eliminando dados desnecessários graças à personalização da consulta.  
+   - Por outro lado, o REST apresentou tamanhos de payload fixos, o que pode ser eficiente para aplicações que demandam consistência nos dados.  
+
+   **Tabela de Payloads de Request (em bytes)**  
+
+   | Arquitetura | Query 1 | Query 2 | Query 3 |
+   |-------------|---------|---------|---------|
+   | REST        | 45      | 119     | 260     |
+   | GraphQL     | 138     | 363     | 640     |
+
+   **Tabela de Payloads de Response (em bytes)**  
+
+   | Arquitetura | Query 1  | Query 2  | Query 3  |
+   |-------------|----------|----------|----------|
+   | REST        | 6550     | 20095    | 62824    |
+   | GraphQL     | 187      | 2365     | 3496     |
+
+### Conclusão  
+
+Os resultados reforçam que **a escolha entre REST e GraphQL deve ser baseada nos requisitos específicos de cada aplicação**. Enquanto o REST é uma escolha confiável para sistemas legados e aplicações simples, o GraphQL se destaca em cenários que exigem flexibilidade e consultas altamente inter-relacionadas.  
+
+Os dados e análises deste repositório fornecem uma base sólida para a decisão informada entre as duas arquiteturas, especialmente em projetos que envolvem diferentes níveis de complexidade e linguagens de programação.  
+
+Para mais detalhes sobre a execução e os dados coletados, consulte os arquivos nos diretórios `java-tcc/`, `go-tcc/` e `python-tcc/`.
+Os dados e análises deste repositório fornecem uma base sólida para a decisão informada entre as duas arquiteturas, especialmente em projetos que envolvem diferentes níveis de complexidade e linguagens de programação.  
+
+Para mais detalhes sobre a execução e os dados coletados, consulte os arquivos nos diretórios `java-tcc/`, `go-tcc/` e `python-tcc/`.
+
+
